@@ -46,3 +46,26 @@ export declare const updatePostInput: z.ZodObject<{
     content?: string | undefined;
 }>;
 export type UpdatePostType = z.infer<typeof updatePostInput>;
+export declare const Blog: z.ZodObject<{
+    id: z.ZodString;
+    title: z.ZodString;
+    content: z.ZodString;
+    name: z.ZodString;
+    date: z.ZodString;
+    tags: z.ZodArray<z.ZodString, "many">;
+}, "strip", z.ZodTypeAny, {
+    title: string;
+    content: string;
+    id: string;
+    name: string;
+    date: string;
+    tags: string[];
+}, {
+    title: string;
+    content: string;
+    id: string;
+    name: string;
+    date: string;
+    tags: string[];
+}>;
+export type BlogType = z.infer<typeof Blog>;

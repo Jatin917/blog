@@ -24,3 +24,14 @@ export const updatePostInput = z.object({
     content: z.string().optional(),
 });
 export type UpdatePostType = z.infer<typeof updatePostInput>;
+
+export const Blog = z.object({
+    id: z.string(), // or number, depending on your API
+    title: z.string(),
+    content: z.string(),
+    name: z.string(),
+    date: z.string(),
+    tags: z.array(z.string())
+  });
+
+export type BlogType = z.infer<typeof Blog>;
