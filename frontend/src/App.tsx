@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import NavBar from './comonents/NavBar';
 import BlogDetail from './comonents/BlogDetail';
 import BlogInput from './pages/BlogInput';
+import Home from './pages/Home';
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
-          <Route path="/" element={<Blog />} />
+          <Route path="/" element={<Home />} />
           <Route path="/blog/publish" element={<BlogInput />} />
           <Route path="/blog/:id" element={<BlogDetail />} />
         </Routes>

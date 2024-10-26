@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import BlogCard from '../comonents/BlogCard';
 import { BlogType } from '@jaitin/medium-common';
 
@@ -19,6 +19,7 @@ const Blog = () => {
 
     fetchData().then((data) => {
       console.log("blog data is ", data);
+      data.reverse();
       setBlogData(data);
     }).catch((error) => {
       console.error("Error fetching blog data:", error);
@@ -26,7 +27,7 @@ const Blog = () => {
   }, []);
 
   return (
-    <div className='flex gap-3 border-b-4 flex-col w-[80%] m-auto mt-[100px] z-0'>
+    <div className=' flex gap-3 flex-col w-[75%] m-auto- z-0'>
       {
         blogData.length > 0 ? blogData.map((blog: BlogType) => (
           <BlogCard key={blog.id} id={blog.id} title={blog.title} content={blog.content} author={blog.name} date={blog.date} tags={blog.tags} />
