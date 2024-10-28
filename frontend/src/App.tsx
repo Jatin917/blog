@@ -8,12 +8,14 @@ import NavBar from './comonents/NavBar';
 import BlogDetail from './comonents/BlogDetail';
 import BlogInput from './pages/BlogInput';
 import Home from './pages/Home';
+import { RecoilRoot } from 'recoil';
 
 
 function App() {
 
   return (
     <div>
+      <RecoilRoot>
       <BrowserRouter>
         <NavBar />
         <Routes>
@@ -25,6 +27,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <ToastContainer />
+      </RecoilRoot>
     </div>
   )
 }
