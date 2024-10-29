@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { isAuthenticated } from "../store/atom/atom";
+import React from "react";
 
 interface PropsTypes {
     name:string,
@@ -7,9 +10,10 @@ interface PropsTypes {
 }
 
 
-  const UserOptions:React.FC<PropsTypes> = ({ name, onLogout, toggleDropdown }) => {
+  const UserOptions:React.FC<PropsTypes> = React.memo(({ name, onLogout, toggleDropdown }) => {
 
     const navigate = useNavigate();
+    const isAuth = useRecoilValue(isAuthenticated);
     return (
         <div className="absolute top-[50px] right-[12px] mt-2 w-48 bg-gray-200 rounded-lg shadow-lg">
           {/* Outward pointing arrow */}
@@ -19,7 +23,7 @@ interface PropsTypes {
           ></div>
     
           <div className="px-4 py-2 border-b">
-            <span className="text-gray-800 font-medium">Jatin</span>
+            <span className="text-gray-800 font-medium">{name==="" ? "User" : name}</span>
           </div>
           <ul className="py-1">
             <li>
@@ -47,7 +51,16 @@ interface PropsTypes {
               </button>
             </li>
             <li>
-              <button
+              {!isAuth ? <button
+                className="w-full text-left px-4 py-2 text-red-500 hover:bg-gray-200"
+                onClick={() => {
+                  toggleDropdown();
+                  navigate('/signup')
+                  // console.log("navigating to signup");
+                }}
+              >
+                SignUp
+              </button> :  <button
                 className="w-full text-left px-4 py-2 text-red-500 hover:bg-gray-200"
                 onClick={() => {
                   onLogout();
@@ -55,11 +68,11 @@ interface PropsTypes {
                 }}
               >
                 Logout
-              </button>
+              </button>}
             </li>
           </ul>
         </div>
       );
-    };
+    });
     
     export default UserOptions;

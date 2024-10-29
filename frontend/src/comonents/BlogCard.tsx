@@ -13,7 +13,7 @@ interface BlogCardProps {
   id:string;
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({
+const BlogCard: React.FC<BlogCardProps> = React.memo(({
   title,
   content,
   author,
@@ -69,6 +69,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
     <div className='border-b border-gray-300 h-1 w-[80%] m-auto' />
     </>
   );
-};
+});
 
 export default BlogCard;

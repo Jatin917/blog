@@ -3,7 +3,7 @@ import z from 'zod'
 export const signUpInput = z.object({
     email:z.string(),
     password:z.string(),
-    username:z.string().optional()
+    name:z.string().optional()
 });
 export type signUpType = z.infer<typeof signUpInput>;
 

@@ -2,15 +2,15 @@ import z from 'zod';
 export declare const signUpInput: z.ZodObject<{
     email: z.ZodString;
     password: z.ZodString;
-    username: z.ZodOptional<z.ZodString>;
+    name: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     email: string;
     password: string;
-    username?: string | undefined;
+    name?: string | undefined;
 }, {
     email: string;
     password: string;
-    username?: string | undefined;
+    name?: string | undefined;
 }>;
 export type signUpType = z.infer<typeof signUpInput>;
 export declare const signInInput: z.ZodObject<{
@@ -54,17 +54,17 @@ export declare const Blog: z.ZodObject<{
     date: z.ZodString;
     tags: z.ZodArray<z.ZodString, "many">;
 }, "strip", z.ZodTypeAny, {
+    name: string;
     title: string;
     content: string;
     id: string;
-    name: string;
     date: string;
     tags: string[];
 }, {
+    name: string;
     title: string;
     content: string;
     id: string;
-    name: string;
     date: string;
     tags: string[];
 }>;

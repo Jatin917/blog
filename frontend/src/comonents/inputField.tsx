@@ -14,6 +14,7 @@ interface InputFieldProps {
 
 const InputField: React.FC<InputFieldProps> = React.memo(({name, placeholder, value, initialValue, onchange, type}) => {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        console.log([event.target.name], event.target.value);
         onchange({...initialValue, [event.target.name]:event.target.value})
     }
   return (

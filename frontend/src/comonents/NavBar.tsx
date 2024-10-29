@@ -1,13 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import notification  from '../assets/notification.png'
 import user from '../assets/user.png'
 import UserOptions from './UserOption'
-import { useSetRecoilState } from 'recoil'
-import { searchState } from '../store/atom/atom'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { isAuthenticated, Name, searchState } from '../store/atom/atom'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
-const NavBar = () => {
+const NavBar = React.memo(() => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuth, setIsAuth] = useRecoilState(isAuthenticated);
   const setSearchItem = useSetRecoilState(searchState);
+  // const [name, setName] = useState(null);
+  const [name, setName] = useRecoilState(Name);
+  useEffect(()=>{
+    async function fetchName() {
+      if(isAuth){
+        try {
+          const res = await axios.get(`${import.meta.env.VITE_API_URL}/app/v1/user/get?id=${localStorage.getItem("user")}`);
+          setName(res.data.name);
+        } catch (error) {
+          console.log((error as Error).message)
+        }
+      }
+      else setName("");
+    }
+    fetchName();
+  },[isAuth])
   const handleSearchText = (e: any) => {
     setTimeout(() => {
       setSearchItem(e.target.value);
@@ -19,6 +40,10 @@ const NavBar = () => {
   }
   function handleLogout(){
     localStorage.removeItem('user');
+    console.log("navigating to ");
+    setIsAuth(false);
+    navigate('/');
+    toast.success("Logout Successfully!");
   }
   return (
     <div className='flex gap-2 items-center justify-between border-b pb-2 fixed left-0 w-full top-0 h-[70px] bg-white ' style={{zIndex:1}}>
@@ -33,13 +58,13 @@ const NavBar = () => {
         </div>
           {isOpen && (
             <UserOptions 
-              name={user} 
+              name={name} 
               onLogout={handleLogout} 
               toggleDropdown={toggleDropdown} 
             />
           )}
     </div>
   )
-}
+})
 
 export default NavBar

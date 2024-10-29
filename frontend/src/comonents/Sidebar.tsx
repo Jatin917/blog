@@ -13,6 +13,6 @@ const Sidebar = () => {
       <WhoToFollow />
     </div>
   )
-}
+};
 
 export default Sidebar

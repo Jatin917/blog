@@ -3,7 +3,7 @@ import { signUpController } from "../controller/signUpController";
 import { signInController } from "../controller/signInController";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { sign } from "hono/jwt";
+import { jwt, sign, verify } from "hono/jwt";
 import { signInInput, signUpInput } from "@jaitin/medium-common/dist/index";
 
 export const userRoute = new Hono<{
@@ -33,7 +33,7 @@ userRoute.post('/signup', async (c)=>{
       });
       const token: string = await sign({ id: res.id }, c.env.SECRET_KEY) // Pass an object with id property
       return c.json({
-        token: token,
+        jwt: token,
       });
     } catch (error) {
       return c.json({
@@ -69,3 +69,40 @@ userRoute.post('/signin', async (c) => {
         console.log("error is: ", error);
     }
 });
+
+userRoute.get('/getalluser', async (c) => {
+  try {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+    const users = await prisma.user.findMany();
+    return c.json(users);
+  } catch (error) {
+    return c.json({
+      message: (error as Error).message
+    })
+  }
+});
+
+userRoute.get('/get', async(c)=> {
+  try {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+    const id = c.req.query('id');
+    const payload = await verify(id || "", c.env.SECRET_KEY);
+    console.log("id is", payload);
+    const userId = String(payload.id);
+    const user = await prisma.user.findUnique({
+      where:{
+        id: userId
+      }
+    });
+    const name = user!==null && user.name;
+    return c.json({name});
+  } catch (error) {
+    return c.json({
+      message:(error as Error).message
+    })
+  }
+})

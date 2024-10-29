@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BlogType } from "@jaitin/medium-common";
 
-const BlogDetail: React.FC = () => {
+const BlogDetail: React.FC = React.memo(() => {
     const { id } = useParams<{ id: string }>();
     // const blog = blogs.find((b) => b.id === parseInt(id || '', 10));
   
@@ -62,6 +62,6 @@ const BlogDetail: React.FC = () => {
         </div>
       </div>
     );
-  };
+  });
   
   export default BlogDetail;
