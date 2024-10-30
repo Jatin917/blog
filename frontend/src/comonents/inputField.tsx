@@ -5,7 +5,7 @@ import { signUpType } from '@jaitin/medium-common';
 interface InputFieldProps {
     name: string;        // Change React.ReactNode to string for better type safety
     placeholder: string; // Change React.ReactNode to string for better type safety
-    value:string;
+    value:string | undefined;
     type:string;
     initialValue:signUpType | signInType;
     onchange:(value: signUpType | signInType) => void;

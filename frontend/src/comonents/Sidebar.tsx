@@ -1,4 +1,4 @@
-import React from 'react'
+
 import StaffPicks from './staffPickSection'
 import WritingPopup from './sidebarWritingCard'
 import RecommendedTopics from './recommendedTopicsCard'
